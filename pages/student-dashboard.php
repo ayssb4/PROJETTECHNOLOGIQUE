@@ -1,7 +1,5 @@
  <?php
-/**
- * Tableau de bord étudiant
- */
+ 
 
 session_start();
 
