@@ -1,12 +1,9 @@
  <?php
-/**
- * Page de création de quiz
- */
-
-// Start session
+ 
+ 
 session_start();
 
-// Include basic functions
+ 
 require_once '../config/database.php';
 require_once '../includes/functions.php';
 
@@ -16,10 +13,10 @@ requireProfessor();
 $error = '';
 $success = '';
 
-// Get subjects
+ 
 $subjects = getSubjects($pdo);
 
-// Process form submission
+ 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $title = cleanInput($_POST['title'] ?? '');
     $description = cleanInput($_POST['description'] ?? '');
@@ -27,13 +24,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $time_limit = (int) ($_POST['time_limit'] ?? 600);
     $questions = $_POST['questions'] ?? [];
     
-    // Validation
+   
     if (empty($title) || $subject_id <= 0) {
         $error = 'Le titre et la matière sont obligatoires.';
     } elseif (empty($questions) || count($questions) < 1) {
         $error = 'Vous devez créer au moins une question.';
     } else {
-        // Validate questions
+         
         $validQuestions = 0;
         foreach ($questions as $q) {
             if (!empty($q['question']) && !empty($q['option_a']) && !empty($q['option_b']) && 
@@ -48,7 +45,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             try {
                 $pdo->beginTransaction();
                 
-                // Create quiz
+                
                 $stmt = $pdo->prepare("
                     INSERT INTO quizzes (title, description, subject_id, professor_id, time_limit, total_questions) 
                     VALUES (?, ?, ?, ?, ?, ?)
@@ -56,7 +53,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $stmt->execute([$title, $description, $subject_id, getCurrentUserId(), $time_limit, $validQuestions]);
                 $quiz_id = $pdo->lastInsertId();
                 
-                // Add questions
+                 
                 $stmt = $pdo->prepare("
                     INSERT INTO questions (quiz_id, question_text, option_a, option_b, option_c, option_d, correct_answer, question_order) 
                     VALUES (?, ?, ?, ?, ?, ?, ?, ?)
@@ -478,7 +475,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     </style>
 </head>
 <body>
-    <!-- Header -->
+    
     <header class="header">
         <nav class="nav">
             <a href="../index.php" class="logo">🎓K&A Quiz Show</a>
@@ -489,7 +486,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         </nav>
     </header>
 
-    <!-- Main Content -->
+    
     <main class="main-content">
         <div class="container">
             <h1>📝 Créer un Quiz</h1>
@@ -568,7 +565,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     </button>
                 </div>
                 
-                <!-- Form Actions -->
+                 
                 <div class="form-actions">
                     <a href="prof-dashboard.php" class="btn btn-secondary">
                         ↩️ Annuler
@@ -584,13 +581,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <script>
         let questionCount = 0;
         
-        // Add first question when page loads
+        
         document.addEventListener('DOMContentLoaded', function() {
             addQuestion();
             updateTimeLimit();
         });
         
-        // Update time limit when minutes change
+        
         document.getElementById('time_minutes').addEventListener('change', updateTimeLimit);
         
         function updateTimeLimit() {
@@ -661,7 +658,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             if (questionElement) {
                 questionElement.remove();
                 
-                // Renumber remaining questions
+                 
                 const remainingQuestions = document.querySelectorAll('.question-item');
                 remainingQuestions.forEach(function(question, index) {
                     const questionNumber = question.querySelector('.question-number');
@@ -670,7 +667,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     }
                 });
                 
-                // Hide remove button if only one question remains
+               
                 if (remainingQuestions.length === 1) {
                     const removeBtn = remainingQuestions[0].querySelector('.remove-question');
                     if (removeBtn) {
@@ -680,7 +677,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             }
         }
         
-        // Form validation before submit
+         
         document.getElementById('quizForm').addEventListener('submit', function(e) {
             const questions = document.querySelectorAll('.question-item');
             let hasValidQuestion = false;
