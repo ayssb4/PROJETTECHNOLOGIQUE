@@ -1,23 +1,18 @@
 <?php
-/**
- * Page d'édition de quiz
- */
 
-// Start session
+ 
 session_start();
-
-// Include basic functions
+ 
 require_once '../config/database.php';
 require_once '../includes/functions.php';
 
-// Require professor login
+ 
 requireProfessor();
 
 $quiz_id = (int) ($_GET['id'] ?? 0);
 $error = '';
 $success = '';
-
-// Get quiz information
+ 
 $stmt = $pdo->prepare("
     SELECT q.*, s.name as subject_name 
     FROM quizzes q 
@@ -32,7 +27,7 @@ if (!$quiz) {
     redirect('prof-dashboard.php');
 }
 
-// Get quiz questions
+
 $stmt = $pdo->prepare("
     SELECT * FROM questions 
     WHERE quiz_id = ? 
@@ -41,10 +36,10 @@ $stmt = $pdo->prepare("
 $stmt->execute([$quiz_id]);
 $existing_questions = $stmt->fetchAll();
 
-// Get subjects
+ 
 $subjects = getSubjects($pdo);
 
-// Process form submission
+ 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $title = cleanInput($_POST['title'] ?? '');
     $description = cleanInput($_POST['description'] ?? '');
@@ -52,13 +47,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $time_limit = (int) ($_POST['time_limit'] ?? 600);
     $questions = $_POST['questions'] ?? [];
     
-    // Validation
+   
     if (empty($title) || $subject_id <= 0) {
         $error = 'Le titre et la matière sont obligatoires.';
     } elseif (empty($questions) || count($questions) < 1) {
         $error = 'Vous devez avoir au moins une question.';
     } else {
-        // Validate questions
+       
         $validQuestions = 0;
         foreach ($questions as $q) {
             if (!empty($q['question']) && !empty($q['option_a']) && !empty($q['option_b']) && 
@@ -73,7 +68,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             try {
                 $pdo->beginTransaction();
                 
-                // Update quiz
+                
                 $stmt = $pdo->prepare("
                     UPDATE quizzes 
                     SET title = ?, description = ?, subject_id = ?, time_limit = ?, total_questions = ? 
@@ -81,11 +76,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 ");
                 $stmt->execute([$title, $description, $subject_id, $time_limit, $validQuestions, $quiz_id, getCurrentUserId()]);
                 
-                // Delete existing questions
+                
                 $stmt = $pdo->prepare("DELETE FROM questions WHERE quiz_id = ?");
                 $stmt->execute([$quiz_id]);
                 
-                // Add new questions
+                 
                 $stmt = $pdo->prepare("
                     INSERT INTO questions (quiz_id, question_text, option_a, option_b, option_c, option_d, correct_answer, question_order) 
                     VALUES (?, ?, ?, ?, ?, ?, ?, ?)
