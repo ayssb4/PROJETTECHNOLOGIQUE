@@ -1,7 +1,4 @@
  <?php
-/**
- * Page de déconnexion
- */
 
 // Start session
 session_start();

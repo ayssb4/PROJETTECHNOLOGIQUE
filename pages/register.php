@@ -21,7 +21,7 @@ if (isLoggedIn()) {
 
 $error = '';
 $success = '';
-$role = $_GET['type'] ?? 'student'; // Par défaut étudiant
+$role = $_GET['type'] ?? 'student'; 
 
 // Process form submission
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {

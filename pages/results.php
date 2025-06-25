@@ -10,7 +10,7 @@ session_start();
 require_once '../config/database.php';
 require_once '../includes/functions.php';
 
-// Require login
+
 requireLogin();
 
 $attempt_id = (int) ($_GET['attempt_id'] ?? 0);

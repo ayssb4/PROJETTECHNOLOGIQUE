@@ -375,7 +375,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <h3>Comptes de démonstration :</h3>
                 <div class="account-info">
                     <div class="account-box">
-                        <strong>👨‍🏫 Professeur</strong><br>
+                        <strong>Professeur</strong><br>
                         Email: prof@prof.com<br>
                         Password: password
                     </div>
