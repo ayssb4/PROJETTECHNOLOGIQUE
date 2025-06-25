@@ -1,7 +1,5 @@
 <?php
-/**
- * Page pour passer un quiz
- */
+ 
 
 // Start session
 session_start();
