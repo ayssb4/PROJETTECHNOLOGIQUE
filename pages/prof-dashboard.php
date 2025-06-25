@@ -2,14 +2,13 @@
  
 session_start();
 
-// Include basic functions
+
 require_once '../config/database.php';
 require_once '../includes/functions.php';
 
-// Require professor login
+ 
 requireProfessor();
-
-// Get professor's quizzes
+ 
 $stmt = $pdo->prepare("
     SELECT q.*, s.name as subject_name, s.icon as subject_icon,
            COUNT(qa.id) as total_attempts,
@@ -24,7 +23,7 @@ $stmt = $pdo->prepare("
 $stmt->execute([getCurrentUserId()]);
 $quizzes = $stmt->fetchAll();
 
-// Get recent quiz attempts
+ 
 $stmt = $pdo->prepare("
     SELECT qa.*, q.title as quiz_title, s.name as subject_name, s.icon as subject_icon, u.name as student_name
     FROM quiz_attempts qa 
@@ -37,8 +36,7 @@ $stmt = $pdo->prepare("
 ");
 $stmt->execute([getCurrentUserId()]);
 $recent_attempts = $stmt->fetchAll();
-
-// Statistics
+ 
 $total_quizzes = count($quizzes);
 $total_attempts = array_sum(array_column($quizzes, 'total_attempts'));
 $avg_score = $total_attempts > 0 ? array_sum(array_column($quizzes, 'avg_score')) / count(array_filter($quizzes, function($q) { return $q['avg_score'] > 0; })) : 0;
@@ -65,7 +63,7 @@ $avg_score = $total_attempts > 0 ? array_sum(array_column($quizzes, 'avg_score')
             flex-direction: column;
         }
         
-        /* Header */
+        
         .header {
             background: rgba(255, 255, 255, 0.1);
             backdrop-filter: blur(10px);
@@ -506,7 +504,7 @@ $avg_score = $total_attempts > 0 ? array_sum(array_column($quizzes, 'avg_score')
     </style>
 </head>
 <body>
-    <!-- Header -->
+ 
     <header class="header">
         <nav class="nav">
             <a href="../index.php" class="logo"> 🎓K&A Quiz Show</a>
@@ -518,10 +516,10 @@ $avg_score = $total_attempts > 0 ? array_sum(array_column($quizzes, 'avg_score')
         </nav>
     </header>
 
-    <!-- Main Content -->
+  
     <main class="main-content">
         <div class="container">
-            <!-- Messages -->
+            
             <?php
             $success_message = getFlashMessage('success');
             $error_message = getFlashMessage('error');
@@ -538,13 +536,13 @@ $avg_score = $total_attempts > 0 ? array_sum(array_column($quizzes, 'avg_score')
                 </div>
             <?php endif; ?>
 
-            <!-- Welcome Section -->
+             
             <div class="welcome-section">
                 <h1>👨‍🏫 Bienvenue, Professeur <?php echo escape(getCurrentUserName()); ?> !</h1>
                 <p>Gérez vos quiz et suivez les performances de vos étudiants</p>
             </div>
 
-            <!-- Statistics -->
+          
             <div class="stats-grid">
                 <div class="stat-card">
                     <div class="stat-icon">📝</div>
@@ -565,7 +563,7 @@ $avg_score = $total_attempts > 0 ? array_sum(array_column($quizzes, 'avg_score')
                 </div>
             </div>
 
-            <!-- Quick Actions -->
+             
             <div class="actions-section">
                 <h2>⚡ Actions Rapides</h2>
                 <div class="action-buttons">
@@ -578,7 +576,7 @@ $avg_score = $total_attempts > 0 ? array_sum(array_column($quizzes, 'avg_score')
                 </div>
             </div>
 
-            <!-- My Quizzes -->
+             
             <div class="quizzes-section">
                 <h2>📚 Mes Quiz</h2>
                 
@@ -625,8 +623,7 @@ $avg_score = $total_attempts > 0 ? array_sum(array_column($quizzes, 'avg_score')
                     </div>
                 <?php endif; ?>
             </div>
-
-            <!-- Recent Attempts -->
+ 
             <div class="recent-attempts">
                 <h2>🕒 Dernières Tentatives</h2>
                 
