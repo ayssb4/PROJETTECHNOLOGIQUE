@@ -9,7 +9,7 @@ function escape($data) {
     return htmlspecialchars($data, ENT_QUOTES, 'UTF-8');
 }
 
-// Fonction pour rediriger
+// Fonction pour rediraction
 function redirect($url) {
     header("Location: $url");
     exit();
