@@ -3,7 +3,6 @@
  * Tableau de bord étudiant
  */
 
-// Start session
 session_start();
 
 // Include basic functions
