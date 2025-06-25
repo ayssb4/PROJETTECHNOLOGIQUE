@@ -1,21 +1,19 @@
  <?php
-/**
- * Page de résultat de quiz
- */
+ 
 
-// Start session
+ 
 session_start();
 
-// Include basic functions
+ 
 require_once '../config/database.php';
 require_once '../includes/functions.php';
 
-// Require login
+ 
 requireLogin();
 
 $attempt_id = (int) ($_GET['attempt_id'] ?? 0);
 
-// Get attempt details
+ 
 $stmt = $pdo->prepare("
     SELECT qa.*, q.title as quiz_title, q.description, s.name as subject_name, s.icon as subject_icon, 
            u.name as student_name, prof.name as professor_name
@@ -38,13 +36,13 @@ if (!$attempt) {
     }
 }
 
-// Check permissions
+ 
 if (isStudent() && $attempt['student_id'] != getCurrentUserId()) {
     setFlashMessage('error', 'Vous ne pouvez voir que vos propres résultats.');
     redirect('student-dashboard.php');
 }
 
-// Get detailed answers
+
 $stmt = $pdo->prepare("
     SELECT sa.*, q.question_text, q.option_a, q.option_b, q.option_c, q.option_d, q.correct_answer
     FROM student_answers sa 
@@ -79,7 +77,7 @@ $percentage = calculatePercentage($attempt['correct_answers'], $attempt['total_q
             flex-direction: column;
         }
         
-        /* Header */
+       
         .header {
             background: rgba(255, 255, 255, 0.1);
             backdrop-filter: blur(10px);
@@ -126,7 +124,7 @@ $percentage = calculatePercentage($attempt['correct_answers'], $attempt['total_q
             transform: translateY(-2px);
         }
         
-        /* Main content */
+         
         .main-content {
             flex: 1;
             padding: 40px 20px;
@@ -505,11 +503,10 @@ $percentage = calculatePercentage($attempt['correct_answers'], $attempt['total_q
             </div>
         </nav>
     </header>
-
-    <!-- Main Content -->
+ 
     <main class="main-content">
         <div class="container">
-            <!-- Result Header -->
+          
             <div class="result-header">
                 <h1><?php echo $attempt['subject_icon']; ?> Résultat du Quiz</h1>
                 <h2 style="color: #666; font-size: 1.5em; margin-bottom: 20px;">
@@ -549,7 +546,7 @@ $percentage = calculatePercentage($attempt['correct_answers'], $attempt['total_q
                 </div>
             </div>
 
-            <!-- Statistics -->
+         
             <div class="stats-grid">
                 <div class="stat-card">
                     <div class="stat-icon">✅</div>
@@ -576,7 +573,7 @@ $percentage = calculatePercentage($attempt['correct_answers'], $attempt['total_q
                 </div>
             </div>
 
-            <!-- Detailed Answers -->
+            
             <div class="answers-section">
                 <h2>📝 Détail des Réponses</h2>
                 
@@ -624,7 +621,7 @@ $percentage = calculatePercentage($attempt['correct_answers'], $attempt['total_q
                 <?php endforeach; ?>
             </div>
 
-            <!-- Actions -->
+            
             <div class="actions-section">
                 <h2>🎯 Que faire maintenant ?</h2>
                 <p style="margin-bottom: 20px; color: #666;">
