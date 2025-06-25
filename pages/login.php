@@ -3,7 +3,7 @@
  * Page de connexion
  */
 
-// Start session
+
 session_start();
 
 // Include basic functions
