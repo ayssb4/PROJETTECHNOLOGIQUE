@@ -17,15 +17,14 @@ try {
     // Création de la connexion PDO
     $pdo = new PDO("mysql:host=$servername;dbname=$dbname;charset=utf8", $username, $password, $options);
     
-    // Message de succès (optionnel, à retirer en production)
-    // echo "Connexion réussie à la base de données !";
+    
     
 } catch(PDOException $e) {
-    // Gestion des erreurs de connexion
+    //  erreurs de connexion
     die("Erreur de connexion à la base de données : " . $e->getMessage());
 }
 
-// Fonction pour obtenir la connexion (optionnelle)
+
 function getConnection() {
     global $pdo;
     return $pdo;
