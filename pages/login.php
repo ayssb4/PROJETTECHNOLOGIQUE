@@ -376,12 +376,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <div class="account-info">
                     <div class="account-box">
                         <strong>👨‍🏫 Professeur</strong><br>
-                        Email: prof@demo.com<br>
+                        Email: prof@prof.com<br>
                         Password: password
                     </div>
                     <div class="account-box">
                         <strong>👨‍🎓 Élève</strong><br>
-                        Email: eleve@demo.com<br>
+                        Email: eleve@student.com<br>
                         Password: password
                     </div>
                 </div>

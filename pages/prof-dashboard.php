@@ -569,10 +569,10 @@ $avg_score = $total_attempts > 0 ? array_sum(array_column($quizzes, 'avg_score')
             <div class="actions-section">
                 <h2>⚡ Actions Rapides</h2>
                 <div class="action-buttons">
-                    <a href="create-quizz.php" class="btn btn-success">
+                    <a href="results.php" class="btn btn-success">
                         ➕ Créer un Nouveau Quiz
                     </a>
-                    <a href="results.php" class="btn">
+                    <a href="quiz_result.php" class="btn">
                         📊 Voir tous les Résultats
                     </a>
                 </div>
@@ -613,10 +613,10 @@ $avg_score = $total_attempts > 0 ? array_sum(array_column($quizzes, 'avg_score')
                                 </div>
                                 
                                 <div class="quiz-actions">
-                                    <a href="edit_quiz.php?id=<?php echo $quiz['id']; ?>" class="btn btn-small btn-primary">
+                                    <a href="/PROJETTECHNOLOGIQUE/pages/edit_quiz.php?id=<?php echo $quiz['id']; ?>" class="btn btn-small btn-primary">
                                         ✏️ Modifier
                                     </a>
-                                    <a href="quiz_results.php?id=<?php echo $quiz['id']; ?>" class="btn btn-small btn-warning">
+                                    <a href="/PROJETTECHNOLOGIQUE/pages/results.php"<?php echo $quiz['id']; ?>" class="btn btn-small btn-warning">
                                         📊 Résultats
                                     </a>
                                 </div>
